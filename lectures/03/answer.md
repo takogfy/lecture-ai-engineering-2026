@@ -64,7 +64,10 @@ def make_quiz(lecture: int) -> str:
 
 ## 宿題
 
-- 取り組んだレベル：基礎 / 実装 / 発展
-- やったこと：
-- 結果：
-- 気づき・疑問：
+- 取り組んだレベル：実装
+- やったこと：`save_learning_log(topic, note)` を追加し、学習記録を `learning_log/` に日時付きJSONで保存するようにした。Pydantic AI の `requires_approval=True` と `DeferredToolRequests` を使い、CLIで保存の承認・拒否後に処理を再開するようにした。保存依頼時にモデルがツールを呼ぶよう、指示とdocstringも修正した。
+
+    - 入力したコマンド
+    uv run python -m app.agent --trace "次の学習記録を learning_log に保存してください。トピックはLoRA、内容は低ランク行列を使って学習する方法です。"
+- 結果：ツール呼び出しに成功し、learning_logに日時付きのjsonで保存できた。
+- 気づき・疑問：最初docstringの書き方が悪く、承認がCLIで操作できない状態になってしまった。モデルが正しくツールの使い方を読み取れるような工夫はこちら側でしないといけないことを学んだ。
